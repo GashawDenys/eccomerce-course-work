@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="container">
+            <div class="header__inner">
+                <div class="logo"><a href="{% url 'base' %}">YourStore</a></div>
+                <div class="user">
+                {% if request.user.is_authenticated %}
+                 <span class="white-text">Вітаємо, {{ request.user.username }}</span>
+                 {% if not request.user.is_staff %}
+                <a class="user-item grey-link" href="{% url 'cabinet' %}">Особистий кабінет</a>
+                {% else %}
+                <a class="user-item grey-link" href="{% url 'admin_page' %}">Сторінка адміністратора</a>
+                {% endif %}
+                <a class="user-item grey-link" href="{% url 'logout' %}">Вийти</a>
+                {% else %}
+                <a class="user-item grey-link" href="{% url 'registration' %}">Зареєструватися</a>
+                <a class="user-item grey-link" href="{% url 'login' %}">Увійти</a>
+                {% endif %}
+                </div>
+                <div class="cart">
+                    <a href="{% url 'cart' %}" class="cart-ref">Кошик:</a>
+                    <span id="cart_count">{% if not request.session.total %} 0 {% else %} {{ request.session.total }} {% endif %}</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    {% block content %}
+    <div class="content">
+        <div class="container">
+
+            <div class="content">
+                <div class="categories">
+                    <h2 class="categories__title">Категорії</h2>
+                    <ul class="categories__list">
+
+                        {% for category in categories %}
+                            <li>
+                                <a href="{{ category.get_absolute_url }}" class="categories__item">{{ category.name }}</a>
+                            </li>
+                        {% endfor %}
+
+                    </ul>
+                </div>
+
+                <div class="products-outer">
+                <h3 class='last-header'>Останні товари</h3>
+                <div class="products">
+
+                    {% for product in products %}
+                    <div href="{{ product.get_absolute_url }}" class="products__item">
+                        <a href="{{ product.get_absolute_url }}">
+                            <img src="{{ product.image.url }}" alt="Product" class="products__img">
+                        </a>
+                        <h3 class="products__title">
+                            <a href="{{ product.get_absolute_url }}">{{ product.brand }} {{ product.title }}</a>
+                        </h3>
+                        <div class="products__price">{{ product.price.normalize }} грн</div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+
+    <!-- <footer class="footer">
+        <div class="container">
+
+            <div class="footer__inner">
+                <div class="footer-first">
+                    <h3>Категорії</h3>
+                    <div class="footer__categories">
+                        {% for category in categories %}
+                        <a href="{{ category.get_absolute_url }}" class="categories__item">{{ category.name }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="footer-second">
+                    <div class="footer__info">
+                        Телефонуйте: +380970749676
+                    </div>
+                </div>
+
+                <div class="footer-third">
+                    <h3>Наші сервіси</h3>
+                    <div class="footer__services">
+                        <a class="footer-service" href='#'>Сервіс 1</a>
+                        <a class="footer-service" href='#'>Сервіс 2</a>
+                        <a class="footer-service" href='#'>Сервіс 3</a>
+                        <a class="footer-service" href='#'>Сервіс 4</a>
+                        <a class="footer-service" href='#'>Сервіс 5</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </footer> -->
+
+</body>
+
+</html>

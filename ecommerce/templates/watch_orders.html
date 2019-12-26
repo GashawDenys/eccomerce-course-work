@@ -1,0 +1,38 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class='container'>
+<h1>Замовлення</h1>
+
+<div class="table-container">
+<table class="table cart-table">
+<tr class="table-header">
+    <td>Номер</td>
+    <td>Замовник</td>
+    <td>Дата замовлення</td>
+    <td>Статус</td>
+    <td>Вартість</td>
+    <td>Деталі замовлення</td>
+</tr>
+
+{% for order in orders %}
+
+<tr>    
+    <td>{{ order.id }}</td>
+    <td>{{ order.user }}</td>
+    <td>{{ order.date }}</td>
+    <td>{{ order.status }}</td>
+    <td>{{ order.total_price.normalize }} грн</td>
+    <td><a href="{% url 'alter_order' order.pk %}" type="button" class="btn btn-primary shadow-none" data-toggle="modal" data-target="#exampleModal-{{ order.id }}">
+        Редагувати</a>
+    </td>
+</tr>
+
+{% endfor %}
+</table>
+</div>
+</div>
+
+
+
+{% endblock %}

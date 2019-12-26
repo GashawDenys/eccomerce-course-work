@@ -1,0 +1,17 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+<div class="row justify-content-center">
+<h1>Написати листа покупцям</h1>
+</div>
+<div class="form-container">
+    <form action='{% url "send_message" %}' method="POST">
+        {% csrf_token %}
+        <textarea cols="40" rows="10" name='message'></textarea><br>
+        <input class="btn btn-info shadow-none" type="submit" value="Надіслати">
+    </form>
+</div>
+</div>
+{% endblock %}

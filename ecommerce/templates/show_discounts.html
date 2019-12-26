@@ -1,0 +1,35 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="container">
+<h1>Знижки</h1>
+
+<div class="table-container">
+<table class="table cart-table">
+<tr class="table-header">
+    <td>Номер</td>
+    <td>Категорія</td>
+    <td>Відсоток</td>
+    <td></td>
+</tr>
+
+{% for discount in discounts %}
+
+<tr>    
+    <td>{{ discount.id }}</td>
+    <td>{{ discount.category }}</td>
+    <td>{{ discount.value }}</td>
+    <td><a href="{% url 'delete_discount' discount.pk %}" class="btn btn-primary shadow-none">
+        Видалити</a>
+    </td>
+</tr>
+
+{% endfor %}
+</table>
+</div>
+</div>
+
+
+
+
+{% endblock %}

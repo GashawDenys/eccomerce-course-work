@@ -1,0 +1,30 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="container">
+<h1>Ваше замовлення</h1>
+<div class="table-container">
+<table class="table cart-table">
+<tr class="table-header">
+    <td>Товар</td>
+    <td>Кількість</td>
+    <td>Ціна</td>
+</tr>
+{% for item in cart.items.all %}
+<tr id="{{ item.product.slug }}">
+    <td>{{ item.product.brand }}  {{ item.product.title }}</td>
+    <td>{{ item.amount }}</td>
+    <td>{{ item.total_price }} грн</td>
+</tr>
+{% endfor %}
+<tr>
+    <td></td>
+    <td><b>Загалом:</b></td>
+    <td><b>{{ cart.total_price }} грн</b></td>
+</tr>
+</table>
+
+<a class="btn btn-info btn-checkout shadow-none" href="{% url 'create_order' %}">Оформити замовлення</a>    
+</div>
+</div>
+{% endblock %}
